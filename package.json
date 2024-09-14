@@ -1,0 +1,48 @@
+{
+  "name": "util-method-scanner",
+  "displayName": "util-method-scanner",
+  "description": "方法导出扫描工具",
+  "publisher": "kimhou",
+  "version": "0.0.1",
+  "engines": {
+    "vscode": "^1.93.0"
+  },
+  "categories": [
+    "Other"
+  ],
+  "activationEvents": [],
+  "main": "./src/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "util-method-scanner.scan",
+        "title": "scan export method"
+      }
+    ],
+    "menus": {
+      "explorer/context": [
+        {
+          "command": "util-method-scanner.scan",
+          "group": "group1"
+        }
+      ]
+    }
+  },
+  "scripts": {
+    "package": "vsce package --no-yarn",
+    "pretest": "npm run lint",
+    "lint": "eslint src --ext js",
+    "test": "vscode-test"
+  },
+  "devDependencies": {
+    "eslint": "^8.56.0"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/kimhou/util-method-scanner.git"
+  },
+  "packageManager": "yarn@1.22.22+sha1.ac34549e6aa8e7ead463a7407e1c7390f61a6610"
+}
