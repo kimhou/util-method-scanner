@@ -23,12 +23,16 @@ function activate(context) {
           if (selectedWorkspaceFolder) {
 			const folderName = path.basename(selectedWorkspaceFolder.uri.fsPath);
             const outputFile = path.join(selectedWorkspaceFolder.uri.fsPath, `util-method-scanner-${getCurrentTimeFormatted()}.xlsx`);
-			await scanUtilMethod({
-				projectName: folderName,
-				scanPath: uri.fsPath, outputPath: outputFile}
-			);
-			vscode.window.showInformationMessage(`扫描完成，请在当前项目目录下查看结果文件：${outputFile}`);
-
+            vscode.window.showInformationMessage(`开始扫描目录：${folderName}`);
+            try{
+              await scanUtilMethod({
+                projectName: folderName,
+                scanPath: uri.fsPath, outputPath: outputFile}
+              );
+              vscode.window.showInformationMessage(`扫描完成，请在当前项目目录下查看结果文件：${outputFile}`);        
+            }catch(e){
+              vscode.window.showErrorMessage(`扫描过程中发生错误：${e.message}`);
+            }
           }
         }
 	});

@@ -10,6 +10,9 @@ async function collectExports(targetPath) {
   let allExports = [];
 
   if (fs.statSync(targetPath).isDirectory()) {
+    if(targetPath.endsWith('node_modules')) {
+      return [];
+    }
     const files = await vscode.workspace.findFiles(new vscode.RelativePattern(targetPath, '**/*.{js,ts,tsx}'));
     for (const file of files) {
       const exports = await getExports(file);
@@ -112,12 +115,11 @@ function saveToExcel(data, outputPath) {
 
 async function scanUtilMethod({projectName, scanPath, outputPath}) {
   console.log(`[scanUtilMethod start] ${JSON.stringify({scanPath, outputPath})}`);
-  let allExports = await collectExports(scanPath);
-  allExports = allExports.map(item => ({projectName, ...item}));
-  saveToExcel(allExports, outputPath);
-
-  console.log(`导出完成，结果保存在: ${outputPath}`);
-  console.log(`扫描的路径: ${scanPath}`);
+    let allExports = await collectExports(scanPath);
+    allExports = allExports.map(item => ({projectName, ...item}));
+    saveToExcel(allExports, outputPath);
+    console.log(`导出完成，结果保存在: ${outputPath}`);
+    console.log(`扫描的路径: ${scanPath}`);  
 }
 
 module.exports = { scanUtilMethod };
